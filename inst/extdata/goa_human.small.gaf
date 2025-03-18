@@ -1,0 +1,50 @@
+!gaf-version: 2.2
+!
+!generated-by: GOC
+!
+!date-generated: 2025-02-07T22:38
+!
+!Header from source association file:
+!=================================
+!
+!generated-by: GOC
+!
+!date-generated: 2025-02-07T09:21
+!
+!Header from goa_human source association file:
+!=================================
+!
+!The set of protein accessions included in this file is based on UniProt reference proteomes, which provide one protein per gene.
+!They include the protein sequences annotated in Swiss-Prot or the longest TrEMBL transcript if there is no Swiss-Prot record.
+!In addition this file included Swiss-Prot Isoforms, RNA and ComplexPortal annotations data
+!
+!date-generated: 2024-12-21 18:10
+!generated-by: UniProt
+!go-version: http://purl.obolibrary.org/obo/go/releases/2024-12-15/extensions/go-plus.owl
+!
+!=================================
+!
+!Header copied from paint_goa_human_valid.gaf
+!=================================
+!Created on Thu Nov 21 14:20:14 2024.
+!generated-by: PANTHER
+!date-generated: 2024-11-21
+!PANTHER version: v.19.0.
+!GO version: 2024-11-03.
+!
+!=================================
+!
+!Documentation about this header can be found here: https://github.com/geneontology/go-site/blob/master/docs/gaf_validation.md
+!
+UniProtKB	A0A024RBG1	NUDT4B	enables	GO:0003723	GO_REF:0000043	IEA	UniProtKB-KW:KW-0694	F	Diphosphoinositol polyphosphate phosphohydrolase NUDT4B	NUDT4B	protein	taxon:9606	20241216	UniProt		UniProtKB:A0A024RBG1
+UniProtKB	A0A024RBG1	NUDT4B	enables	GO:0005515	PMID:33961781	IPI	UniProtKB:Q8NFP7	F	Diphosphoinositol polyphosphate phosphohydrolase NUDT4B	NUDT4B	protein	taxon:9606	20241214	IntAct		UniProtKB:A0A024RBG1
+UniProtKB	A0A024RBG1	NUDT4B	enables	GO:0046872	GO_REF:0000043	IEA	UniProtKB-KW:KW-0479	F	Diphosphoinositol polyphosphate phosphohydrolase NUDT4B	NUDT4B	protein	taxon:9606	20241216	UniProt		UniProtKB:A0A024RBG1
+UniProtKB	A0A024RBG1	NUDT4B	located_in	GO:0005829	GO_REF:0000052	IDA		C	Diphosphoinositol polyphosphate phosphohydrolase NUDT4B	NUDT4B	protein	taxon:9606	20241022	HPA		UniProtKB:A0A024RBG1
+UniProtKB	A0A075B6H5	TRBV20OR9-2	involved_in	GO:0002376	GO_REF:0000043	IEA	UniProtKB-KW:KW-0391	P	Ig-like domain-containing protein	TRBV20OR9-2	protein	taxon:9606	20241216	UniProt		UniProtKB:A0A075B6H5
+UniProtKB	Q9NYV4	CDK12	part_of	GO:0002944	PMID:22012619	IPI	UniProtKB:O75909	C	Cyclin-dependent kinase 12	CDK12|CRK7|CRKRS|KIAA0904	protein	taxon:9606	20121207	MGI		UniProtKB:Q9NYV4
+UniProtKB	Q9NYV4	CDK12	part_of	GO:0002944	PMID:26597175	IPI		C	Cyclin-dependent kinase 12	CDK12|CRK7|CRKRS|KIAA0904	protein	taxon:9606	20241115	ComplexPortal		UniProtKB:Q9NYV4
+UniProtKB	O75909	CCNK	part_of	GO:0002945	PMID:22012619	IPI	UniProtKB:Q14004	C	Cyclin-K	CCNK|CPR4	protein	taxon:9606	20121207	MGI		UniProtKB:O75909
+UniProtKB	O75909	CCNK	part_of	GO:0002945	PMID:26748711	IPI		C	Cyclin-K	CCNK|CPR4	protein	taxon:9606	20241115	ComplexPortal		UniProtKB:O75909
+UniProtKB	Q8TEA1	NSUN6	involved_in	GO:0002946	PMID:26160102	IDA		P	tRNA (cytosine(72)-C(5))-methyltransferase NSUN6	NSUN6|NOPD1	protein	taxon:9606	20190912	UniProt		UniProtKB:Q8TEA1
+UniProtKB	Q9BXV9	GON7	involved_in	GO:0002949	PMID:31481669	IDA		P	EKC/KEOPS complex subunit GON7	GON7|C14orf142	protein	taxon:9606	20211221	UniProt		UniProtKB:Q9BXV9
+

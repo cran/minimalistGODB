@@ -1,0 +1,179 @@
+format-version: 1.2
+data-version: releases/2025-02-06
+subsetdef: chebi_ph7_3 "Rhea list of ChEBI terms representing the major species at pH 7.3."
+subsetdef: gocheck_do_not_annotate "Term not to be used for direct annotation"
+subsetdef: gocheck_obsoletion_candidate "Terms planned for obsoletion"
+subsetdef: goslim_agr "AGR slim"
+subsetdef: goslim_aspergillus "Aspergillus GO slim"
+subsetdef: goslim_candida "Candida GO slim"
+subsetdef: goslim_chembl "ChEMBL protein targets summary"
+subsetdef: goslim_drosophila "Drosophila GO slim"
+subsetdef: goslim_euk_cellular_processes_ribbon "GO ribbon for eukaroytic cellular processes"
+subsetdef: goslim_flybase_ribbon "Insecta GO ribbon slim"
+subsetdef: goslim_generic "Generic GO slim"
+subsetdef: goslim_metagenomics "Metagenomics GO slim"
+subsetdef: goslim_mouse "Mouse GO slim"
+subsetdef: goslim_pir "PIR GO slim"
+subsetdef: goslim_plant "Plant GO slim"
+subsetdef: goslim_plant_ribbon "Plant GO ribbon"
+subsetdef: goslim_pombe "Fission yeast GO slim"
+subsetdef: goslim_prokaryote "GO subset for prokaryotes"
+subsetdef: goslim_prokaryote_ribbon "Prokaryote GO ribbon slim"
+subsetdef: goslim_synapse "synapse GO slim"
+subsetdef: goslim_virus "GO subset for viruses"
+subsetdef: goslim_yeast "Yeast GO slim"
+synonymtypedef: syngo_official_label "label approved by the SynGO project"
+synonymtypedef: systematic_synonym "Systematic synonym" EXACT
+default-namespace: gene_ontology
+ontology: go
+
+[Term]
+id: GO:0003723
+name: RNA binding
+namespace: molecular_function
+alt_id: GO:0000498
+alt_id: GO:0044822
+def: "Binding to an RNA molecule or a portion thereof." [GOC:jl, GOC:mah]
+subset: goslim_agr
+subset: goslim_candida
+subset: goslim_chembl
+subset: goslim_drosophila
+subset: goslim_euk_cellular_processes_ribbon
+subset: goslim_flybase_ribbon
+subset: goslim_generic
+subset: goslim_mouse
+subset: goslim_plant
+subset: goslim_plant_ribbon
+subset: goslim_prokaryote
+subset: goslim_prokaryote_ribbon
+subset: goslim_yeast
+synonym: "base pairing with RNA" NARROW []
+synonym: "poly(A) RNA binding" RELATED []
+synonym: "poly(A)-RNA binding" RELATED []
+synonym: "poly-A RNA binding" RELATED []
+xref: Reactome:R-HSA-203922 "Exportin-5 recognizes 3' overhang of pre-miRNA"
+is_a: GO:0003676 ! nucleic acid binding
+
+[Term]
+id: GO:0005515
+name: protein binding
+namespace: molecular_function
+alt_id: GO:0001948
+alt_id: GO:0045308
+def: "Binding to a protein." [GOC:go_curators]
+subset: goslim_candida
+subset: goslim_chembl
+subset: goslim_euk_cellular_processes_ribbon
+subset: goslim_metagenomics
+subset: goslim_pir
+subset: goslim_plant
+subset: goslim_plant_ribbon
+subset: goslim_prokaryote_ribbon
+synonym: "glycoprotein binding" NARROW []
+synonym: "protein amino acid binding" EXACT []
+xref: Reactome:R-HSA-9866132 "Intermediate II binds CYC1, UQCRC1, UQCRC2, UQCRH"
+is_a: GO:0005488 ! binding
+
+
+[Term]
+id: GO:0046872
+name: metal ion binding
+namespace: molecular_function
+def: "Binding to a metal ion." [GOC:ai]
+subset: goslim_agr
+subset: goslim_drosophila
+subset: goslim_flybase_ribbon
+subset: goslim_metagenomics
+synonym: "heavy metal binding" NARROW []
+synonym: "metal binding" EXACT []
+is_a: GO:0043169 ! cation binding
+
+[Term]
+id: GO:0005829
+name: cytosol
+namespace: cellular_component
+def: "The part of the cytoplasm that does not contain organelles but which does contain other particulate matter, such as protein complexes." [GOC:hjd, GOC:jl]
+subset: goslim_agr
+subset: goslim_chembl
+subset: goslim_drosophila
+subset: goslim_euk_cellular_processes_ribbon
+subset: goslim_flybase_ribbon
+subset: goslim_generic
+subset: goslim_mouse
+subset: goslim_plant
+xref: NIF_Subcellular:sao101633890
+xref: Wikipedia:Cytosol
+is_a: GO:0110165 ! cellular anatomical structure
+relationship: part_of GO:0005737 ! cytoplasm
+
+[Term]
+id: GO:0002376
+name: immune system process
+namespace: biological_process
+def: "Any process involved in the development or functioning of the immune system, an organismal system for calibrated responses to potential internal or invasive threats." [GO_REF:0000022, GOC:add]
+comment: Note that this term is a direct child of 'biological_process ; GO:0008150' because some immune system processes are types of cellular process (GO:0009987), whereas others are types of multicellular organism process (GO:0032501).
+subset: goslim_agr
+subset: goslim_chembl
+subset: goslim_flybase_ribbon
+subset: goslim_generic
+subset: goslim_mouse
+subset: goslim_pir
+xref: Wikipedia:Immune_system
+is_a: GO:0008150 ! biological_process
+
+[Term]
+id: GO:0002929
+name: MECO complex
+namespace: cellular_component
+def: "A highly stable complex composed of the ATAC complex and the mediator complex (also called TRAP or MED). MECO binds and regulates the transcription of a subset of non-coding RNAs transcribed by RNA polymerase II." [GOC:hjd, PMID:20508642]
+synonym: "meta-coactivator complex" EXACT []
+is_a: GO:0032991 ! protein-containing complex
+
+[Term]
+id: GO:0002944
+name: cyclin K-CDK12 complex
+namespace: cellular_component
+def: "A protein complex consisting of cyclin Kand cyclin-dependent kinase 12 (CDK12). Cyclins are characterized by periodicity in protein abundance throughout the cell cycle. Cyclin-dependent kinases represent a family of serine/threonine protein kinases that become active upon binding to a cyclin regulatory partner." [PMID:22012619]
+synonym: "CycK/Cdk12 complex" RELATED []
+is_a: GO:0000307 ! cyclin-dependent protein kinase holoenzyme complex
+
+[Term]
+id: GO:0002945
+name: cyclin K-CDK13 complex
+namespace: cellular_component
+def: "A protein complex consisting of cyclin Kand cyclin-dependent kinase 13 (CDK13). Cyclins are characterized by periodicity in protein abundance throughout the cell cycle. Cyclin-dependent kinases represent a family of serine/threonine protein kinases that become active upon binding to a cyclin regulatory partner." [PMID:22012619]
+synonym: "CycK/Cdk13 complex" RELATED []
+is_a: GO:0000307 ! cyclin-dependent protein kinase holoenzyme complex
+
+[Term]
+id: GO:0002946
+name: tRNA C5-cytosine methylation
+namespace: biological_process
+def: "The process whereby a cytosine in a tRNA is methylated at position 5 of the cytosine." [ISBN:155581073X]
+synonym: "tRNA 5-methylcytosine biosynthesis" RELATED []
+is_a: GO:0030488 ! tRNA methylation
+
+[Term]
+id: GO:0002949
+name: tRNA threonylcarbamoyladenosine modification
+namespace: biological_process
+alt_id: GO:0070526
+def: "The attachment of a carbonyl group and a threonine to the amino group of the adenine residue immediately 3' of the anticodon, in tRNAs that decode ANN codons (where N is any base)." [GOC:imk, GOC:mah, PMID:19287007, PMID:21183954, PMID:23258706]
+synonym: "t6A biosynthesis" EXACT [PMID:19287007]
+synonym: "t6A biosynthetic process" EXACT [PMID:19287007]
+synonym: "t6A tRNA modification" EXACT []
+synonym: "threonylcarbamoyladenosine anabolism" EXACT [GOC:mah]
+synonym: "threonylcarbamoyladenosine biosynthesis" EXACT [GOC:mah]
+synonym: "threonylcarbamoyladenosine biosynthetic process" EXACT []
+synonym: "threonylcarbamoyladenosine formation" EXACT [GOC:mah]
+synonym: "threonylcarbamoyladenosine synthesis" EXACT [GOC:mah]
+is_a: GO:0006400 ! tRNA modification
+is_a: GO:0070525 ! tRNA threonylcarbamoyladenosine metabolic process
+
+[Term]
+id: GO:0003002
+name: regionalization
+namespace: biological_process
+def: "The pattern specification process that results in the subdivision of an axis or axes in space to define an area or volume in which specific patterns of cell differentiation will take place or in which cells interpret a specific environment." [GOC:dph, GOC:isa_complete]
+synonym: "pattern formation" RELATED [GOC:dph]
+is_a: GO:0007389 ! pattern specification process
