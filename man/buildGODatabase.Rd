@@ -16,7 +16,7 @@ buildGODatabase(goa, gobasic, dir = NULL, verbose = FALSE)
 \item{verbose}{Boolean if TRUE print out some diagnostic info}
 }
 \value{
-returns GO database with columns c("HGNC","GO","RELATION","NAME","ONTOLOGY")
+returns no value but has side effect of saving GOGOA3 to a subdirectory
 }
 \description{
 driver to build GO database
@@ -28,7 +28,7 @@ parameter dir should be omitted or NULL except for the developer harvesting the 
 
 The output GOGOA was saved as an .RData file.
 This was too large for CRAN.
-It is available from https://github.com/barryzee/GO
+It is available from https://github.com/barryzee/GO/tree/main/databases
 }
 \examples{
 \dontrun{
@@ -36,7 +36,7 @@ It is available from https://github.com/barryzee/GO
 # these were obtained from the download sites listed in 'details' section
 goa<-"~/goa_human.gaf"
 gobasic<-"~/go-basic.obo"
-GOGOA<-buildGODatabase(goa,gobasic,dir="~/",verbose=FALSE)
+buildGODatabase(goa,gobasic,dir="~/",verbose=TRUE)
 # > dim(GOGOA)
 # [1] 720139      5
 # > GOGOA[1:5,]
@@ -51,6 +51,6 @@ GOGOA<-buildGODatabase(goa,gobasic,dir="~/",verbose=FALSE)
 # here is a small example that you can run
 f1<-system.file("extdata","goa_human.small.gaf",package="minimalistGODB")
 f2<-system.file("extdata","go-basic.small.obo",package="minimalistGODB")
-GODBsmall<-buildGODatabase(f1,f2,verbose=FALSE)
+buildGODatabase(f1,f2,verbose=TRUE)
 
 }

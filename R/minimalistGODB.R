@@ -1,3 +1,46 @@
+#' buildGODatabaseDriver
+#' 
+#' @description driver to build multiple GO databases for many species
+#' 
+#' @param goaDir character string path name to directory containing downloaded goa .gaf files
+#' @param gobasic character string path name to downloaded go-basic.obo
+#' @param dir character string path name to directory to hold species database subdirectories
+#' @param verbose Boolean if TRUE print out some diagnostic info
+#' 
+#' @details
+#' download goa .gaf files from https://current.geneontology.org/products/pages/downloads.html
+#' download go-basic.obo from https://geneontology.org/docs/download-ontology/
+#' 
+#' @examples
+#' \dontrun{
+#' # replace my path names for goa and gobasic with your own!!
+#' # these were obtained from the download sites listed in 'details' section
+#' goaDir<-"/Users/barryzeeberg/Downloads/gaf/"
+#' gobasic<-"~/go-basic.obo"
+#' buildGODatabaseDriver(goaDir,gobasic,dir="~/personal",verbose=TRUE)
+#' }
+#' 
+#' # here is a small example that you can run
+#' goaDir<-system.file("extdata",package="minimalistGODB")
+#' gobasic<-system.file("extdata","go-basic.small.obo",package="minimalistGODB")
+#' dir<-tempdir()
+#' buildGODatabaseDriver(goaDir,gobasic,dir,verbose=TRUE)
+#' 
+#' @details
+#' The output GOGOA3 was saved as an .RData file.
+#' This was too large for CRAN.
+#' It is available from https://github.com/barryzee/GO/tree/main/databases 
+#' 
+#' @return returns GO database with columns c("HGNC","GO","RELATION","NAME","ONTOLOGY")
+#' 
+#' @export
+buildGODatabaseDriver<-
+  function(goaDir,gobasic,dir=NULL,verbose=FALSE) {
+    gafs<-list.files(goaDir,pattern="*.gaf",full.names=TRUE)
+    for(gaf in gafs)
+      GOGOA3<-buildGODatabase(gaf,gobasic,dir,verbose)
+  }
+    
 #' buildGODatabase
 #' 
 #' @description driver to build GO database
@@ -18,7 +61,7 @@
 #' # these were obtained from the download sites listed in 'details' section
 #' goa<-"~/goa_human.gaf"
 #' gobasic<-"~/go-basic.obo"
-#' GOGOA<-buildGODatabase(goa,gobasic,dir="~/",verbose=FALSE)
+#' buildGODatabase(goa,gobasic,dir="~/",verbose=TRUE)
 #' # > dim(GOGOA)
 #' # [1] 720139      5
 #' # > GOGOA[1:5,]
@@ -33,34 +76,45 @@
 #' # here is a small example that you can run
 #' f1<-system.file("extdata","goa_human.small.gaf",package="minimalistGODB")
 #' f2<-system.file("extdata","go-basic.small.obo",package="minimalistGODB")
-#' GODBsmall<-buildGODatabase(f1,f2,verbose=FALSE)
+#' buildGODatabase(f1,f2,verbose=TRUE)
 #' 
 #' @details
 #' The output GOGOA was saved as an .RData file.
 #' This was too large for CRAN.
-#' It is available from https://github.com/barryzee/GO 
+#' It is available from https://github.com/barryzee/GO/tree/main/databases 
 #' 
-#' @return returns GO database with columns c("HGNC","GO","RELATION","NAME","ONTOLOGY")
+#' @return returns no value but has side effect of saving GOGOA3 to a subdirectory
 #' 
 #' @export
 buildGODatabase<-
 	function(goa,gobasic,dir=NULL,verbose=FALSE) {
 		GOA<-parseGOA(goa)
+		if(verbose)
+		  print(c("GOA",length(GOA)))
 		GO<-parseGOBASIC(gobasic,verbose)
+		if(verbose)
+		  print(c("GO",length(GO)))
 		GOGOA<-joinGO(GOA,GO)
 		GOGOA3<-subsetGOGOA(GOGOA)
+		
+		species<-strsplit(basename(goa),".gaf",fixed=TRUE)[[1]]
+		#GOGOA3$species<-basename(goa)
+		GOGOA3$species<-species
 		
 		if(!is.null(dir)) {
 		  subd<-sprintf("%s/%s",dir,"GODB_RDATA")
 		  if(!dir.exists(subd))
 		    dir.create(subd)
-		  save(GOA,file=sprintf("%s/GOA.RData",subd))
-		  save(GO,file=sprintf("%s/GO.RData",subd))
-		  save(GOGOA,file=sprintf("%s/GOGOA.RData",subd))
-		  save(GOGOA3,file=sprintf("%s/GOGOA3.RData",subd))
+		  subd2<-sprintf("%s/%s",subd,species)
+		  if(!dir.exists(subd2))
+		    dir.create(subd2)
+		  save(GOA,file=sprintf("%s/GOA_%s.RData",subd2,species))
+		  save(GO,file=sprintf("%s/GO_%s.RData",subd2,species))
+		  save(GOGOA,file=sprintf("%s/GOGOA_%s.RData",subd2,species))
+		  save(GOGOA3,file=sprintf("%s/GOGOA3_%s.RData",subd2,species))
+		  if(verbose)
+		    print(c("SAVING . . . ",sprintf("%s/GOGOA3_%s.RData",subd2,species)))
 		}
-		
-		return(GOGOA3)
 	}
 
 #' parseGOA
@@ -95,8 +149,21 @@ buildGODatabase<-
 #' @export
 parseGOA<-
 	function(goa) {
-		x<-strsplit(grep("^UniProtKB",readLines(goa),value=TRUE),"\t")
+		#x<-strsplit(grep("^UniProtKB",readLines(goa),value=TRUE),"\t")
+		#x<-strsplit(grep("^MGI",readLines(goa),value=TRUE),"\t")
+	  
+	  #print(grepList(species<-strsplit(basename(goa),".gaf",fixed=TRUE)[[1]]))
+	  
+	  #x<-strsplit(grep(grepList(basename(goa)),readLines(goa),value=TRUE),"\t")
+	  
+	  species<-strsplit(basename(goa),".gaf",fixed=TRUE)[[1]]
+	  gr<-grepList(species)
+	  
+	  #print(c("GREP",species,gr))
+	  
+	  x<-strsplit(grep(gr,readLines(goa),value=TRUE),"\t")
 		lx<-length(x)
+		
 		m<-matrix(nrow=lx,ncol=3)
 		colnames(m)<-c("HGNC","GO","RELATION")
 		for(i in 1:lx) {
@@ -157,8 +224,8 @@ parseGOBASIC<-
 			m[i,"ONTOLOGY"]<-x[v[i]+3]
 		}
 		if(verbose) {
-			message(c("intial m"))
-			message(m[1:10,])
+			message(c("initial m"))
+			message(m[1:3,])
 		}
 		
 		# filter out "obsolete" in "NAME"
@@ -167,7 +234,7 @@ parseGOBASIC<-
 		  m<-m[-g,]
 		if(verbose) {
 			message(c("non obsolete m"))
-			message(m[1:10,])
+			message(m[1:3,])
 		}
 		
 		m[,"GO"]<-substring(m[,"GO"],5,14)
@@ -236,7 +303,9 @@ parseGOBASIC<-
 #' @export
 joinGO<-
 	function(GOA,GO) {
-		m<-matrix(nrow=nrow(GOA),ncol=5)
+		#m<-matrix(nrow=nrow(GOA),ncol=5)
+	  # restrict GO categories in GOA to those in GO
+	  GOA<-restrictGOA(GOA,GO)
 		NAME<-GO$m[GOA[,"GO"],"NAME"]
 		gx<-cbind(GOA,NAME)
 		rownames(gx)<-NULL
@@ -286,8 +355,77 @@ subsetGOGOA<-
       l$stats$ncats[[ONTOLOGY]]<-length(l$cats[[ONTOLOGY]])
       l$genes[[ONTOLOGY]]<-unique(l$ontologies[[ONTOLOGY]][,"HGNC"])
       l$stats$ngenes[[ONTOLOGY]]<-length(l$genes[[ONTOLOGY]])
+      
+      ngenes<-as.matrix(sort(table(l$ontologies[[ONTOLOGY]][,"GO_NAME"]),decreasing=TRUE))
+      fgenes<-ngenes/l$stats$ngenes[[ONTOLOGY]]
+      l$stats$tcats[[ONTOLOGY]]<-cbind(ngenes,fgenes)
+      
     }
     l$genes[["ALL"]]<-unique(GOGOA[,"HGNC"])
     l$cats[["ALL"]]<-unique(GOGOA[,"GO_NAME"])
     return(l)
+  }
+
+#' restrictGOA
+#' 
+#' @description restrict GO categories in GOA to those in GO
+#' 
+#' @param GOA output of parseGOA()
+#' @param GO output of parseGOBASIC() 
+#' 
+#' @examples
+#' GOA<-restrictGOA(GOA,GO)
+#' 
+#' @return returns a restricted version of GOA
+#'
+#' @export
+restrictGOA<-
+  function(GOA,GO) {
+    good<-intersect(unique(rownames(GO$m)),unique(GOA[,"GO"]))
+    w<-which(GOA[,"GO"] %in% good)
+    return(GOA[w,])
+  }
+
+#' grepList
+#' 
+#' @description determine the correct pattern to grep for depending on the species
+#' 
+#' @param gaf character string containing the basename of the gaf file downloaded
+#'  from https://current.geneontology.org/products/pages/downloads.html
+#'  
+#' @examples
+#' pattern<-grepList("tair.gaf")
+#' 
+#' @return returns the correct pattern to grep for
+#'  
+#' @export
+grepList<-
+  function(gaf) {
+    v<-vector("character")
+    v["cgd"]<-"^CGD"
+    v["dictybase"]<-"^dictyBase"
+    v["ecocyc"]<-"^UniProtKB"
+    v["fb"]<-"^FB"
+    v["genedb_lmajor"]<-"^TriTrypDB"
+    v["genedb_pfalciparum"]<-"^PlasmoDB"
+    v["genedb_tbrucei"]<-"^TriTrypDB"
+    v["goa_chicken"]<-"^UniProtKB"
+    v["goa_cow"]<-"^UniProtKB"
+    v["goa_dog"]<-"^UniProtKB"
+    v["goa_human"]<-"^UniProtKB"
+    v["goa_pig"]<-"^UniProtKB"
+    v["japonicusdb"]<-"^JaponicusDB"
+    v["mgi"]<-"^MGI"
+    v["pombase"]<-"^PomBase"
+    v["pseudocap"]<-"^PseudoCAP"
+    # v["reactome"]<-"^"
+    v["rgd"]<-"^RGD"
+    v["sgd"]<-"^SGD"
+    v["sgn"]<-"^SGN"
+    v["tair"]<-"^AGI_LocusCode"
+    v["wb"]<-"^WB"
+    v["xenbase"]<-"^Xenbase"
+    v["zfin"]<-"^ZFIN"
+
+    return(v[gaf])
   }
